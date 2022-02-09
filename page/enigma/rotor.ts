@@ -3,6 +3,7 @@ export class Rotor {
     charCount: number;
     turnoverPosition: number | number[];
     position: number = 0;
+    _wheelElem?: HTMLElement;
 
     constructor(characterMap: string, turnoverPosition: number | number[]) {
         if(characterMap.length === 0) throw "Character map is too short";
@@ -38,5 +39,12 @@ export class Rotor {
             if(this.position == this.turnoverPosition[i] -1) return true;
         }
         return false;
+    }
+
+    getElement(): HTMLElement{
+        if(this._wheelElem !== undefined) return this._wheelElem;
+        this._wheelElem = document.createElement("div");
+        this._wheelElem.classList.add("wheel");
+        return this._wheelElem;
     }
 }

@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "main": "build/main.js",
     "scripts": {
-        "compile": "tsc && copyfiles -u 1 page/*.html build && webpack",
+        "compile": "tsc && copyfiles -u 1 page/*.html page/*.css build && webpack",
         "start": "npm run compile"
     },
     "author": "ToxicFrazzles",

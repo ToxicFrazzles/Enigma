@@ -4,6 +4,8 @@ import { Reflector } from './reflector';
 export class RotorAssembly{
     rotors: Rotor[];
     reflector: Reflector;
+    _assemblyElem?: HTMLElement;
+
     constructor(rotors: Rotor[], reflector: Reflector){
         this.rotors = rotors;
         this.reflector = reflector;
@@ -24,6 +26,7 @@ export class RotorAssembly{
     _stepWheels(){
         let rotateNext = true;
         for(let i=0; i<this.rotors.length && rotateNext; ++i){
+            // console.log("wheel " + i + " stepped forwards");
             rotateNext = this.rotors[i].stepForward();
         }
     }
@@ -38,6 +41,7 @@ export class RotorAssembly{
     encipherText(text: string): string {
         let result = "";
         for(let i=0; i<text.length; ++i){
+            if(text[i] == " ") continue;
             result += this._inputCharacter(text[i]);
             this._stepWheels();
         }
@@ -56,5 +60,15 @@ export class RotorAssembly{
         for(let i=0; i<positions.length; ++i){
             this.rotors[i].position = positions[i];
         }
+    }
+
+    getElement(): HTMLElement {
+        if(this._assemblyElem !== undefined) return this._assemblyElem;
+        this._assemblyElem = document.createElement("div");
+        this._assemblyElem.classList.add("wheel_assembly");
+        for(let i=this.rotors.length-1; i>=0; --i){
+            this._assemblyElem.appendChild(this.rotors[i].getElement());
+        }
+        return this._assemblyElem;
     }
 }
